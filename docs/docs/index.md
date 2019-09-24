@@ -93,7 +93,7 @@ model = model.cuda()
 model.eval()
 
 evaluator = ImageNetEvaluator(
-                 model_name='ResNeXt-101-32x8d',
+                 paper_model_name='ResNeXt-101-32x8d',
                  paper_arxiv_id='1611.05431')
 
 def get_img_id(image_name):
@@ -103,7 +103,7 @@ with torch.no_grad():
     for i, (input, target) in enumerate(test_loader):
         input = input.to(device='cuda', non_blocking=True)
         target = target.to(device='cuda', non_blocking=True)
-        output = model(input
+        output = model(input)
         image_ids = [get_img_id(img[0]) for img in test_loader.dataset.imgs[i*test_loader.batch_size:(i+1)*test_loader.batch_size]]
         evaluator.add(dict(zip(image_ids, list(output.cpu().numpy()))))
     
